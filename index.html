@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compound Solution Calculator</title>
+    <style>
+        #calculator {
+            margin: 0 auto;
+            width: 50%;
+            text-align: center;
+        }
+        h2 {
+            font-size: 36px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 24px;
+            margin: 8px auto;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        #result {
+            font-size: 20px;
+        }
+        .equation {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+        label, input {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <h2>Compound Solution Calculator</h2>
+        <p>Enter the details below to calculate the amount of compound needed to achieve a desired concentration:</p>
+
+        <label for="finalVolume">Final Volume (ml):</label>
+        <input type="number" id="finalVolume" step="0.01"><br><br>
+        
+        <label for="desiredConcentration">Desired Concentration (%):</label>
+        <input type="number" id="desiredConcentration" step="0.01" placeholder="Percentage (e.g., 20)"><br><br>
+        
+        <label for="availableStock">Available Stock (%):</label>
+        <input type="number" id="availableStock" step="0.01" placeholder="Percentage (e.g., 20)"><br><br>
+
+        <button onclick="calculate()">Calculate</button>
+        <button onclick="reset()" style="background-color: #f44336;">Reset</button><br><br>
+
+        <p id="result"></p>
+        <p class="equation" id="equation"></p>
+    </div>
+
+    <script>
+        function calculate() {
+            var resultElement = document.getElementById("result");
+            var equationElement = document.getElementById("equation");
+
+            var finalVolume = parseFloat(document.getElementById("finalVolume").value);
+            var desiredConcentration = parseFloat(document.getElementById("desiredConcentration").value);
+            var availableStock = parseFloat(document.getElementById("availableStock").value);
+
+            if (isNaN(finalVolume) || isNaN(desiredConcentration) || isNaN(availableStock)) {
+                resultElement.textContent = "Please enter valid values for all inputs.";
+                equationElement.textContent = "";
+                return;
+            }
+
+            // Calculate the amount needed from the available stock
+            var amountNeeded = (finalVolume * desiredConcentration / availableStock).toFixed(2);
+
+            resultElement.textContent = "Amount of solution needed: " + amountNeeded + " ml";
+
+            equationElement.textContent = "Equation: Amount of solution = (Final Volume × Desired Concentration) ÷ Available Stock";
+        }
+
+        function reset() {
+            document.getElementById("finalVolume").value = "";
+            document.getElementById("desiredConcentration").value = "";
+            document.getElementById("availableStock").value = "";
+            document.getElementById("result").textContent = "";
+            document.getElementById("equation").textContent = "";
+        }
+    </script>
+</body>
+</html>
